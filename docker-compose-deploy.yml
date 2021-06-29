@@ -1,0 +1,61 @@
+version: "3.7"
+
+services:
+  producer:
+    build:
+      context: .
+      dockerfile: ./producer/Dockerfile
+    expose:
+      - "5000"
+    ports:
+      - "5000:5000"
+    environment:
+      - REDISTOGO_URL=redis://localhost:6379
+      - OUTPUT_FILE_PATH=consumer/output.txt
+    container_name: producer
+    depends_on:
+      - redis
+    restart: "on-failure"
+    networks:
+      - app-network
+
+  consumer:
+    build:
+      context: .
+      dockerfile: ./consumer/Dockerfile
+    environment:
+      - REDISTOGO_URL=redis://localhost:6379
+      - OUTPUT_FILE_PATH=consumer/output.txt
+    container_name: consumer
+    depends_on:
+      - producer
+      - redis
+    restart: "on-failure"
+    networks:
+      - app-network
+
+  nginx:
+    image: nginxinc/nginx-unprivileged:1-alpine
+    build:
+      context: .
+      dockerfile: ./nginx/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - producer
+    container_name: nginx
+    restart: "on-failure"
+    networks:
+      - app-network
+
+  redis:
+    container_name: redis
+    image: redis:alpine
+    ports:
+      - 6379:6379
+
+networks:
+  app-network:
+    driver: bridge
+volumes:
+  static_volume:
