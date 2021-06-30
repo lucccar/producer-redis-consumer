@@ -9,8 +9,6 @@ from producer.base.write import write_txt
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
-app.config.from_object(os.environ['APP_SETTINGS'])
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 CORS(app)
 
 q = Queue(connection=conn)
@@ -19,7 +17,7 @@ q = Queue(connection=conn)
 @app.route("/process", methods = ["POST"])
 def process():
 
-    json = request.json()
+    json = request.json
 
     job = q.enqueue_call(
         func=write_txt, args=(json,), result_ttl=5000
