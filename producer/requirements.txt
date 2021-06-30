@@ -1,6 +1,8 @@
 flask==1.1.2              
 flask-cors==3.0.10            
-redis==3.2.100            
-redis-py==3.5.3       
+redis==3.5.0           
 rq==1.8.0            
-setuptools==52.0.0          
+setuptools==52.0.0
+cython
+gunicorn==20.1.0
+docker-py      
