@@ -2,15 +2,15 @@
 
 This repo is a very simple app for show off purposes. The application was coded with flask framework for the api and redis as a queue manager.
 
-It has no user interface, the only possible way to send requests to th producer api endpoint is by command line requests or postman.
+It has no user interface, the only possible way to send requests to th producer api endpoint is through command line requests or postman.
 
-Although simple, the app is provided with a gunicorn socket and nginx server. It's main structure is as follows: A producer flask server exposes a post endpoint in through which gets json data and lines it up in a redis queue. A consumer server sets up a redis worker that gets thejobs and pastes the json data in a output.txt file.
+Although simple, the app is provided with a gunicorn socket and nginx server. Its main structure is as follows: A producer flask server exposes a post endpoint through which gets json data and lines it up in a redis queue. A consumer server sets up a redis worker that gets the jobs and pastes the json data in a output.txt file.
 
 # How to run
 
 ## Dependencies
 
-Both the consumer and the producer services/folders have their own `requirements.txt` file but the producer service is a super set of both. Thereyou can see all the libraries needed for the project.
+Both the consumer and the producer services/folders have their own `requirements.txt` file but the producer service is a superset of both. There you can see all the libraries needed for the project.
 
 ## Starting the app
 
