@@ -10,7 +10,7 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - REDISTOGO_URL=redis://localhost:6379
+      - REDISTOGO_URL=redis://redis:6379
       - OUTPUT_FILE_PATH=consumer/output.txt
     container_name: producer
     depends_on:
@@ -24,7 +24,7 @@ services:
       context: .
       dockerfile: ./consumer/Dockerfile
     environment:
-      - REDISTOGO_URL=redis://localhost:6379
+      - REDISTOGO_URL=redis://redis:6379
       - OUTPUT_FILE_PATH=consumer/output.txt
     container_name: consumer
     depends_on:
@@ -53,9 +53,9 @@ services:
     image: redis:alpine
     ports:
       - 6379:6379
+    networks:
+      - app-network
 
 networks:
   app-network:
     driver: bridge
-volumes:
-  static_volume:
