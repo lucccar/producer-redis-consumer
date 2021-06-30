@@ -4,7 +4,7 @@ COPY . /producer
 WORKDIR /producer
 
 ENV PYTHONUNBUFFERED 1
-ENV PYTHONPATH "${PYTHONPATH}:${PWD}/producer:${PYTHONPATH}/producer/base"
+ENV PYTHONPATH "${PYTHONPATH}:${PWD}/producer/producer:${PYTHONPATH}/producer/producer/base"
 
 ##############################################
 RUN apt-get update 
@@ -17,4 +17,4 @@ RUN pip install -r requirements.txt
 
 EXPOSE 5000
 
-CMD ["gunicorn", "-w", "2", "--bind", "0.0.0.0:5000", "src.main:app"]
+CMD ["gunicorn", "-w", "2", "--bind", "0.0.0.0:5000", "producer:app"]
